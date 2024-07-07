@@ -1,0 +1,40 @@
+{
+  "scheduler_name": "global-scheduler",
+  "autoscaler_type": "hpa_autoscaler",
+  "reconcile_interval": 5,
+  "zone_parameters": {
+    "zone-a": {
+      "function_parameters": {
+        "pythonpi": {
+          "target_time_measure": "rtt",
+          "lookback": 10,
+          "threshold_tolerance": 0.0,
+          "target_duration": 0.5,
+          "percentile_duration": 90
+        }
+      }
+    },
+    "zone-b": {
+      "function_parameters": {
+        "pythonpi": {
+          "target_time_measure": "rtt",
+          "lookback": 10,
+          "threshold_tolerance": 0.0,
+          "target_duration": 0.5,
+          "percentile_duration": 90
+        }
+      }
+    },
+    "zone-c": {
+      "function_parameters": {
+        "pythonpi": {
+          "target_time_measure": "rtt",
+          "lookback": 10,
+          "threshold_tolerance": 0.0,
+          "target_duration": 0.5,
+          "percentile_duration": 90
+        }
+      }
+    }
+  }
+}

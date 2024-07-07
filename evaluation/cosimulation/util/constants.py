@@ -1,0 +1,7 @@
+HPA_AUTOSCALER = 'hpa_autoscaler'
+PRESSURE_AUTOSCALER = 'pressure_autoscaler'
+PRESSURE_GLOBAL_SCHEDULER = 'pressure_global_scheduler'
+LOCALITY_GLOBAL_SCHEDULER = 'locality_global_scheduler'
+CPU_GLOBAL_SCHEDULER = 'cpu_global_scheduler'
+BALANCED_LOCAL_SCHEDULER = 'balanced'
+CPU_LOCAL_SCHEDULER = 'cpu'

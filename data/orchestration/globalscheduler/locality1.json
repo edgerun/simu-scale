@@ -1,0 +1,5 @@
+{
+  "scheduler_name": "global-scheduler",
+  "scheduler_type": "locality_global_scheduler",
+  "delay": 0.1
+}

@@ -1,0 +1,31 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: loadbalancer-$ZONE
+  labels:
+    app: loadbalancer-$ZONE
+    component: loadbalancer
+    ether.ederun.io/type: api-gateway
+    ether.edgerun.io/function: api-gateway
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/controller: "true"
+    ether.edgerun.io/zone: $ZONE
+  containers:
+    - name: loadbalancer
+      image: edgerun/load-balancer:0.08
+      command: [ "python" ]
+      args: [ "-u", "-m", "evaluation.cosimulation.realworld.dockerfiles.load-balancer.local.rr" ]
+      env:
+        - name: ZONE
+          value: $ZONE
+        - name: SCHEDULER_NAME
+          value: $SCHEDULER_NAME
+        - name: RECONCILE_INTERVAL
+          value: "1"
+        - name: MOBILENET_CPU
+          value: $MOBILENET_CPU
+      envFrom:
+        - configMapRef:
+            name: galileo-config
+  restartPolicy: Never

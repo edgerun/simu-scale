@@ -1,0 +1,19 @@
+{
+  "max_workers": 1,
+  "sim_executor_name": "GD",
+  "workload_profile_file_name": "data/workload/base_5_seconds_multiplier_3.json",
+  "target_quality_file_name": "data/target_qualities/balanced.json",
+  "save_simulations": "False",
+  "sleep": 0,
+  "sim_executor_params_file_name":  "data/params/gd_basic.json",
+  "sim_params_file_name": "data/sim_params/base.json",
+  "autoscaler_config_file_name": "data/orchestration/autoscaler/hpa1.json",
+  "topology": "dece_hc",
+  "application_param_file_name": "data/function/python.json",
+  "target_cluster": "zone-c",
+  "global_scheduler_name": "global-scheduler-zone-c",
+  "global_scheduler_config_file_name": "data/orchestration/globalscheduler/locality1.json",
+  "local_scheduler_config_file_name": "data/orchestration/localscheduler/cpu1.json",
+  "application_params_file_name": "data/function/python.json",
+  "n_iterations": 1
+}

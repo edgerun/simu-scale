@@ -1,0 +1,14 @@
+{
+  "zone-a": {
+    "scheduler_type": "balanced",
+    "delay": 0
+  },
+  "zone-b": {
+    "scheduler_type": "balanced",
+    "delay": 0
+  },
+  "zone-c": {
+    "scheduler_type": "balanced",
+    "delay": 0
+  }
+}

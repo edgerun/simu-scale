@@ -1,0 +1,15 @@
+{
+  "profiles": {
+    "zone-a": {
+      "edgerun/pythonpi:1.0.3": [
+        "data/profiles/bottom_median/interarrival_times_user_count_30.920156_121.488943.pkl"
+      ]
+    },
+    "zone-b": {
+      "edgerun/pythonpi:1.0.3": [
+        "data/profiles/bottom_median/interarrival_times_user_count_31.009423_121.245898.pkl"
+      ]
+    }
+  },
+  "scenario_length_seconds": 1400
+}

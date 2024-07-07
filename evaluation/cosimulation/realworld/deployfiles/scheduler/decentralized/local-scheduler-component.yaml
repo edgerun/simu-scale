@@ -1,0 +1,32 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: local-scheduler-$ZONE
+  labels:
+    app: local-scheduler-$ZONE
+    component: local-scheduler
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/controller: "true"
+    ether.edgerun.io/zone: $ZONE
+  containers:
+    - name: local-scheduler
+      image: edgerun/scheduler:0.13
+      command: [ "python", "-u", "-m", "evaluation.cosimulation.realworld.dockerfiles.scheduler.decentralized.local.main" ]
+      env:
+        - name: ZONE
+          value: $ZONE
+        - name: SCHEDULER_NAME
+          value: $SCHEDULER_NAME
+        - name: GLOBAL_SCHEDULER_NAME
+          value: $GLOBAL_SCHEDULER_NAME
+        - name: DELAY
+          value: "$DELAY"
+        - name: MOBILENET_CPU
+          value: $MOBILENET_CPU
+        - name: LOCAL_SCHEDULER_IMPLEMENTATION
+          value: "balanced"
+      envFrom:
+        - configMapRef:
+            name: galileo-config
+  restartPolicy: Never

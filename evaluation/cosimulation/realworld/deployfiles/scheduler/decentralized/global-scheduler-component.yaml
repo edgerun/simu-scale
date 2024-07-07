@@ -1,0 +1,33 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: global-scheduler
+  labels:
+    component: global-scheduler
+    app: global-scheduler
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/controller: "true"
+    ether.edgerun.io/zone: $ZONE
+  containers:
+    - name: global-scheduler
+      image: edgerun/scheduler:0.13
+      command: [ "python", "-u", "-m", "evaluation.cosimulation.realworld.dockerfiles.scheduler.decentralized.global.main" ]
+      env:
+        - name: SCHEDULER_NAME
+          value: $SCHEDULER_NAME
+        - name: DELAY
+          value: "$DELAY"
+        - name: STORAGE_LOCAL_SCHEDULERS
+          value: >
+            $STORAGE_LOCAL_SCHEDULERS
+        - name: MOBILENET_CPU
+          value: $MOBILENET_CPU
+        - name: FUNCTION_MAX_SCALE
+          value: "$FUNCTION_MAX_SCALE"
+        - name: GLOBAL_SCHEDULER_IMPLEMENTATION
+          value: "locality"
+      envFrom:
+        - configMapRef:
+            name: galileo-config
+  restartPolicy: Never

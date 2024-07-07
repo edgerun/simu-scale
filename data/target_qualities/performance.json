@@ -1,0 +1,7 @@
+{
+  "implementation": "performance",
+  "rtt": {
+    "percentile": 0.95,
+    "target": 0.6
+  }
+}

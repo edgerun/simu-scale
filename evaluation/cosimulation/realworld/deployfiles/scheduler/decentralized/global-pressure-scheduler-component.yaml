@@ -1,0 +1,48 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: global-scheduler
+  labels:
+    component: global-scheduler
+    app: global-scheduler
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/controller: "true"
+    ether.edgerun.io/zone: $ZONE
+  containers:
+    - name: global-scheduler
+      image: edgerun/scheduler:0.13
+      command: [ "python", "-u", "-m", "evaluation.cosimulation.realworld.dockerfiles.scheduler.decentralized.global.pressure" ]
+      env:
+        - name: ZONE
+          value: $ZONE
+          # this path is from the host that deploys the component and is used to extract the config's file name
+        - name: LOCAL_CONFIG_PATH
+          value: $AUTOSCALER_JSON_PATH
+          # this config volume path and the local config path help read the config json
+        - name: CONFIG_VOLUME_PATH
+          value: /etc/config
+        # this scheduler name will be used when creating Pods
+        - name: SCHEDULER_NAME
+          value: global-scheduler
+        - name: DELAY
+          value: "$DELAY"
+        - name: STORAGE_LOCAL_SCHEDULERS
+          value: >
+            $STORAGE_LOCAL_SCHEDULERS
+        - name: MOBILENET_CPU
+          value: $MOBILENET_CPU
+        - name: FUNCTION_MAX_SCALE
+          value: "$FUNCTION_MAX_SCALE"
+      envFrom:
+        - configMapRef:
+            name: galileo-config
+      volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            # Contains all autoscaler related configuration in a JSON file
+            name: global-scheduler-json-cm
+  restartPolicy: Never

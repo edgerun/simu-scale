@@ -1,0 +1,39 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: autoscaler-$ZONE
+  labels:
+    app: autoscaler-$ZONE
+    component: autoscaler
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/controller: "true"
+    ether.edgerun.io/zone: $ZONE
+  containers:
+    - name: autoscaler
+      image: edgerun/updateable-autoscaler:0.35
+      command: [ "python", "-u", "-m", "evaluation.cosimulation.realworld.dockerfiles.autoscaler.decentralized.pressure" ]
+      env:
+        - name: ZONE
+          value: $ZONE
+          # this path is from the host that deploys the component and is used to extract the config's file name
+        - name: LOCAL_CONFIG_PATH
+          value: $AUTOSCALER_JSON_PATH
+          # this config volume path and the local config path help read the config json
+        - name: CONFIG_VOLUME_PATH
+          value: /etc/config
+        # this scheduler name will be used when creating Pods
+        - name: SCHEDULER_NAME
+          value: global-scheduler
+      envFrom:
+        - configMapRef:
+            name: galileo-config
+      volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            # Contains all autoscaler related configuration in a JSON file
+            name: autoscaler-json-cm
+  restartPolicy: Never
